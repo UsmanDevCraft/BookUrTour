@@ -11,63 +11,7 @@ const MyTours = () => {
   const location = useLocation();
   const data = location.state;
 
-  const [arrayData, setArrayData] = useState([
-    // {
-    //   id: 1,
-    //   title: "Pérez Art Museum Miami",
-    //   description:
-    //     "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, eos. Rerum doloremque laboriosam ab ratione veritatis itaque dolor.",
-    //   img: "/dest_test_img_1.png",
-    //   price: "$50 - $200",
-    //   stayTime: "3",
-    //   city: "Miami",
-    // },
-    // {
-    //   id: 1,
-    //   title: "Hard Rock Stadium",
-    //   description:
-    //     "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, eos. Rerum doloremque laboriosam ab ratione veritatis itaque dolor.",
-    //   img: "/dest_test_img_2.png",
-    //   price: "$50 - $80",
-    //   stayTime: "1",
-    // },
-    // {
-    //   id: 1,
-    //   title: "Matheson Hammock Park",
-    //   description:
-    //     "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, eos. Rerum doloremque laboriosam ab ratione veritatis itaque dolor.",
-    //   img: "/dest_test_img_3.png",
-    //   price: "$50 - $100",
-    //   stayTime: "9",
-    // },
-    // {
-    //   id: 1,
-    //   title: "The Wharf Miami",
-    //   description:
-    //     "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, eos. Rerum doloremque laboriosam ab ratione veritatis itaque dolor.",
-    //   img: "/dest_test_img_4.png",
-    //   price: "$50 - $200",
-    //   stayTime: "2",
-    // },
-    // {
-    //   id: 1,
-    //   title: "Miami Tower",
-    //   description:
-    //     "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, eos. Rerum doloremque laboriosam ab ratione veritatis itaque dolor.",
-    //   img: "/dest_test_img_5.png",
-    //   price: "$30 - $200",
-    //   stayTime: "3",
-    // },
-    // {
-    //   id: 1,
-    //   title: "Skyviews Miami",
-    //   description:
-    //     "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, eos. Rerum doloremque laboriosam ab ratione veritatis itaque dolor.",
-    //   img: "/dest_test_img_6.png",
-    //   price: "$50 - $200",
-    //   stayTime: "7",
-    // },
-  ]);
+  const [arrayData, setArrayData] = useState([]);
 
   const fetchAllTours = async () => {
     try {
@@ -76,7 +20,7 @@ const MyTours = () => {
       console.log(response);
 
       if (response.status) {
-        // setArrayData(response.data.tours || []);
+        setArrayData(response.data.tours || []);
       } else {
         setError("No tours found.");
       }
@@ -96,11 +40,33 @@ const MyTours = () => {
     setIsModalOpen(true);
   };
 
+  const signoutClick = () => {
+    localStorage.removeItem("authToken");
+    window.location.href = "/login";
+  };
+
   return (
     <div className="box">
-      <h1 className="mt-5" style={{ color: "#202445" }}>
-        My Tours
-      </h1>
+      <div className="mt-5 d-flex justify-content-between align-items-center">
+        <h1 style={{ color: "#202445" }}>
+          My Tours
+        </h1>
+
+        <div
+          className="d-flex align-items-center gap-1"
+          style={{
+            fontWeight: 500,
+            color: "#202445",
+            border: "solid #E1E1E1 1px",
+            borderRadius: "12px",
+            padding: "10px 20px",
+            cursor: "pointer"
+          }}
+          onClick={signoutClick}
+        >
+          Sign Out
+        </div>
+      </div>
 
       {loading ? (
         <div className="spinner-border text-light" role="status">
@@ -108,7 +74,7 @@ const MyTours = () => {
         </div>
       ) : arrayData.length > "0" ? (
         <div className="d-flex justify-content-center gap-5 pb-5 mt-4">
-          <div className="wrapCards">
+          <div className="wrapCards myToursCards justify-content-center">
             {arrayData.map(
               ({ title, description, img, price, stayTime, city }, index) => (
                 <SearchDetailCards

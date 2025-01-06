@@ -25,6 +25,7 @@ const SearchDetailCards = ({
   myTours,
   setIsModalOpen,
   isModalOpen,
+  Booknow,
 }) => {
   const iconStyle = {
     padding: "5px",
@@ -239,6 +240,12 @@ const SearchDetailCards = ({
                 onClick={mytourUpdateScreen}
               >
                 Update
+              </button>
+            </div>
+          ) : Booknow ? (
+            <div>
+              <button className="btn" type="button">
+                Best Wishes
               </button>
             </div>
           ) : (

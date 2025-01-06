@@ -24,7 +24,8 @@ const Signup = () => {
       const response = await signUpUserApi(formValue);
       console.log(response.status);
       if (response.status) {
-        navigate("/login", {state: {alert: true}});
+        navigate("/exploremore", {state: {alert: true}});
+        localStorage.setItem("authToken", response.data.authToken);
       }
     } catch (error) {
       console.log({ error: error.message });

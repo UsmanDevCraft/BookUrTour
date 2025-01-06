@@ -8,7 +8,20 @@ import Alert from "./Alert";
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { alert } = location.state || {};
+  const {
+    alert,
+    tourId,
+    price,
+    description,
+    stayTime,
+    img,
+    title,
+    city,
+    departureLocation,
+    returnDetails,
+    myTour,
+    navigateExploremore,
+  } = location.state || {};
 
   const [eye, setEye] = useState(true);
   const [formValue, setFormValue] = useState({
@@ -26,7 +39,26 @@ const Login = () => {
     try {
       const response = await loginUserApi(formValue);
       if (response.status) {
-        navigate("/booknow", { state: { alert: true } });
+        {
+          navigateExploremore
+            ? navigate("/exploremore") : 
+            navigate("/exploremore")
+            // : navigate("/booknow", {
+            //     state: {
+            //       alert: true,
+            //       tourId,
+            //       price,
+            //       description,
+            //       stayTime,
+            //       img,
+            //       title,
+            //       city,
+            //       departureLocation,
+            //       returnDetails,
+            //       myTour,
+            //     },
+            //   });
+        }
         localStorage.setItem("authToken", response.data.authToken);
       }
     } catch (error) {
@@ -36,6 +68,23 @@ const Login = () => {
 
   const handleChange = (e) => {
     setFormValue((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const navigateSignUp = () => {
+    navigate("/signup", {
+      state: {
+        tourId,
+        price,
+        description,
+        stayTime,
+        img,
+        title,
+        city,
+        departureLocation,
+        returnDetails,
+        myTour,
+      },
+    });
   };
 
   return (
@@ -99,9 +148,7 @@ const Login = () => {
               color: "#f16b51",
               fontWeight: 400,
             }}
-            onClick={() => {
-              navigate("/signup");
-            }}
+            onClick={navigateSignUp}
           >
             Don't have an account, signup <u>here</u>.
           </div>

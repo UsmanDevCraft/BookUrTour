@@ -72,9 +72,36 @@ const DetailsTour = () => {
 
   const navigate = useNavigate();
   const navigateBookNow = () => {
-    console.log(" Tour Id in Details Tour are ", tourId);
     const Token = localStorage.getItem("authToken");
-    Token ? navigate("/booknow") : navigate("/login", { state: { tourId } });
+    Token
+      ? navigate("/booknow", {
+          state: {
+            tourId,
+            price,
+            description,
+            stayTime,
+            img,
+            title,
+            city,
+            departureLocation,
+            returnDetails,
+            myTour,
+          },
+        })
+      : navigate("/login", {
+          state: {
+            tourId,
+            price,
+            description,
+            stayTime,
+            img,
+            title,
+            city,
+            departureLocation,
+            returnDetails,
+            myTour,
+          },
+        });
   };
 
   return (
@@ -198,7 +225,7 @@ const DetailsTour = () => {
               Return
             </p>
             <p style={{ color: "#202020", fontWeight: 400, width: "60rem" }}>
-              {returnDetails ? returnDetails : "7:00 PM on Day 3"}
+              {returnDetails ? returnDetails : `12:00 PM on Day ${stayTime}`}
             </p>
           </div>
           <hr />
@@ -210,66 +237,66 @@ const DetailsTour = () => {
               {/* {city ? (
                 city
               ) : ( */}
-                <div className="d-flex gap-5">
-                  <div>
-                    <p
-                      className="d-flex align-items-center gap-3"
-                      style={{ color: "#202020" }}
-                    >
-                      <IoCheckmarkCircle
-                        style={{ color: "#F16B51", backgroundColor: "#ffffff" }}
-                      />
-                      Basic first aid kit
-                    </p>
-                    <p
-                      className="d-flex align-items-center gap-3"
-                      style={{ color: "#202020" }}
-                    >
-                      <IoCheckmarkCircle
-                        style={{ color: "#F16B51", backgroundColor: "#ffffff" }}
-                      />
-                      Fuel Expense
-                    </p>
-                    <p
-                      className="d-flex align-items-center gap-3"
-                      style={{ color: "#202020" }}
-                    >
-                      <IoCheckmarkCircle
-                        style={{ color: "#F16B51", backgroundColor: "#ffffff" }}
-                      />
-                      Detail Guided Maps
-                    </p>
-                  </div>
-                  <div>
-                    <p
-                      className="d-flex align-items-center gap-3"
-                      style={{ color: "#202020" }}
-                    >
-                      <IoCheckmarkCircle
-                        style={{ color: "#F16B51", backgroundColor: "#ffffff" }}
-                      />
-                      Comfortable Private Booked Transport
-                    </p>
-                    <p
-                      className="d-flex align-items-center gap-3"
-                      style={{ color: "#202020" }}
-                    >
-                      <IoCheckmarkCircle
-                        style={{ color: "#F16B51", backgroundColor: "#ffffff" }}
-                      />
-                      Mess Tent, Kitchen Utensils, and Cook
-                    </p>
-                    <p
-                      className="d-flex align-items-center gap-3"
-                      style={{ color: "#202020" }}
-                    >
-                      <IoCheckmarkCircle
-                        style={{ color: "#F16B51", backgroundColor: "#ffffff" }}
-                      />
-                      Waterproof Tents on twin/triple Sharing
-                    </p>
-                  </div>
+              <div className="d-flex gap-5">
+                <div>
+                  <p
+                    className="d-flex align-items-center gap-3"
+                    style={{ color: "#202020" }}
+                  >
+                    <IoCheckmarkCircle
+                      style={{ color: "#F16B51", backgroundColor: "#ffffff" }}
+                    />
+                    Basic first aid kit
+                  </p>
+                  <p
+                    className="d-flex align-items-center gap-3"
+                    style={{ color: "#202020" }}
+                  >
+                    <IoCheckmarkCircle
+                      style={{ color: "#F16B51", backgroundColor: "#ffffff" }}
+                    />
+                    Fuel Expense
+                  </p>
+                  <p
+                    className="d-flex align-items-center gap-3"
+                    style={{ color: "#202020" }}
+                  >
+                    <IoCheckmarkCircle
+                      style={{ color: "#F16B51", backgroundColor: "#ffffff" }}
+                    />
+                    Detail Guided Maps
+                  </p>
                 </div>
+                <div>
+                  <p
+                    className="d-flex align-items-center gap-3"
+                    style={{ color: "#202020" }}
+                  >
+                    <IoCheckmarkCircle
+                      style={{ color: "#F16B51", backgroundColor: "#ffffff" }}
+                    />
+                    Comfortable Private Booked Transport
+                  </p>
+                  <p
+                    className="d-flex align-items-center gap-3"
+                    style={{ color: "#202020" }}
+                  >
+                    <IoCheckmarkCircle
+                      style={{ color: "#F16B51", backgroundColor: "#ffffff" }}
+                    />
+                    Mess Tent, Kitchen Utensils, and Cook
+                  </p>
+                  <p
+                    className="d-flex align-items-center gap-3"
+                    style={{ color: "#202020" }}
+                  >
+                    <IoCheckmarkCircle
+                      style={{ color: "#F16B51", backgroundColor: "#ffffff" }}
+                    />
+                    Waterproof Tents on twin/triple Sharing
+                  </p>
+                </div>
+              </div>
               {/* )} */}
             </p>
           </div>

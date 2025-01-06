@@ -2,19 +2,22 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { bookTourApi } from "../api/api";
 import Alert from "./Alert";
+import SearchDetailCards from "./SearchDetailCards";
 
 const BookNow = () => {
   const location = useLocation();
   const {
     tourId,
     Data,
-    bookingId,
-    name,
-    email,
-    phone_number,
-    adults,
-    children,
-    payment_method,
+    title,
+    description,
+    img,
+    price,
+    stayTime,
+    city,
+    departureLocation,
+    returnDetails,
+    myTour,
     alert,
   } = location.state || {};
 
@@ -60,7 +63,43 @@ const BookNow = () => {
     phone: "",
     adults: "",
     childs: "",
+    tourId,
+    title,
+    description,
+    img: "",
+    price,
+    stayTime,
+    city,
   });
+
+  // Function to convert image URL to Base64
+  const convertToBase64 = async (imagePath) => {
+    try {
+      const response = await fetch(imagePath);
+      const blob = await response.blob();
+      const reader = new FileReader();
+      return new Promise((resolve, reject) => {
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob); // Convert Blob to Base64
+      });
+    } catch (error) {
+      console.error("Error converting image to Base64:", error);
+      return "";
+    }
+  };
+
+  // Convert img prop to Base64 and update formDataBook
+  useEffect(() => {
+    if (img) {
+      convertToBase64(img).then((base64Image) => {
+        setformDataBook((prev) => ({
+          ...prev,
+          img: base64Image, // Update img property with Base64 string
+        }));
+      });
+    }
+  }, [img]);
 
   useEffect(() => {
     console.log("Form data updated:", formDataBook);
@@ -319,198 +358,211 @@ const BookNow = () => {
   ];
 
   return (
-    <div className="box">
-      <div className="d-flex justify-content-between mt-5">
-        <div style={{ width: "50%" }}>
-          <h1 style={{ color: "#202445", marginBottom: "2rem" }}>
-            {isData ? "Update" : "Confirm"} Your Booking
-          </h1>
-
-          <div style={{ width: "30em" }}>
-            {alert && <Alert message="Login was Successful" />}
-          </div>
-
+    <div className="box mainBooknow">
+      <div className="d-flex justify-content-between mt-5 paretBookTour">
+        <div
+          className="d-flex justify-content-center leftDivBooknow"
+          style={{ width: "60%" }}
+        >
           <div>
-            <form onSubmit={handleSubmitBooking}>
-              <div className="mb-4" style={formStyle}>
-                <label htmlFor="exampleInputPassword1" className="form-label">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="name"
-                  onChange={handleInputChange}
-                  style={{
-                    border: "1px solid #ccc",
-                    borderRadius: "5px",
-                  }}
-                />
-              </div>
-              <div className="mb-4" style={formStyle}>
-                <label htmlFor="exampleInputEmail1" className="form-label">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  className="form-control"
-                  name="email"
-                  onChange={handleInputChange}
-                  aria-describedby="emailHelp"
-                  style={{
-                    border: "1px solid #ccc",
-                    borderRadius: "5px",
-                  }}
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="exampleInputPhone"
-                  className="form-label"
-                  style={{ color: "#999999" }}
-                >
-                  Phone
-                </label>
+            <h1 style={{ color: "#202445", marginBottom: "2rem" }}>
+              {isData ? "Update" : "Confirm"} Your Booking
+            </h1>
 
-                <div
-                  style={{
-                    ...formStyle,
-                    border: phoneError ? "1px solid red" : "1px solid #ccc",
-                    borderRadius: "5px",
-                  }}
-                >
+            <div style={{ width: "30em" }}>
+              {alert && <Alert message="Login was Successful" />}
+            </div>
+
+            <div>
+              <form onSubmit={handleSubmitBooking}>
+                <div className="mb-4" style={formStyle}>
+                  <label htmlFor="exampleInputPassword1" className="form-label">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="name"
+                    onChange={handleInputChange}
+                    style={{
+                      border: "1px solid #ccc",
+                      borderRadius: "5px",
+                    }}
+                  />
+                </div>
+                <div className="mb-4" style={formStyle}>
+                  <label htmlFor="exampleInputEmail1" className="form-label">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    name="email"
+                    onChange={handleInputChange}
+                    aria-describedby="emailHelp"
+                    style={{
+                      border: "1px solid #ccc",
+                      borderRadius: "5px",
+                    }}
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="exampleInputPhone"
+                    className="form-label"
+                    style={{ color: "#999999" }}
+                  >
+                    Phone
+                  </label>
+
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "5px",
+                      ...formStyle,
+                      border: phoneError ? "1px solid red" : "1px solid #ccc",
+                      borderRadius: "5px",
                     }}
                   >
-                    {/* Dropdown for Country Code */}
-                    <select
-                      id="countryCode"
-                      onChange={(e) => handleInputChange(e, "code")}
-                      style={{
-                        border: "none",
-                        padding: "5px",
-                        borderRadius: "5px",
-                        width: "20%",
-                        color: "#202445",
-                      }}
-                    >
-                      {countryCodes.map(({ code, name }) => (
-                        <option key={code} value={code}>
-                          {code} ({name})
-                        </option>
-                      ))}
-                    </select>
-
-                    {/* Vertical Line Separator */}
                     <div
                       style={{
-                        width: "1px",
-                        backgroundColor: "#ccc",
-                        height: "30px",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
                       }}
-                    ></div>
+                    >
+                      {/* Dropdown for Country Code */}
+                      <select
+                        id="countryCode"
+                        onChange={(e) => handleInputChange(e, "code")}
+                        style={{
+                          border: "none",
+                          padding: "5px",
+                          borderRadius: "5px",
+                          width: "20%",
+                          color: "#202445",
+                        }}
+                      >
+                        {countryCodes.map(({ code, name }) => (
+                          <option key={code} value={code}>
+                            {code} ({name})
+                          </option>
+                        ))}
+                      </select>
 
-                    {/* Input for Phone Number */}
+                      {/* Vertical Line Separator */}
+                      <div
+                        style={{
+                          width: "1px",
+                          backgroundColor: "#ccc",
+                          height: "30px",
+                        }}
+                      ></div>
+
+                      {/* Input for Phone Number */}
+                      <input
+                        type="tel"
+                        className="form-control"
+                        id="phone"
+                        onChange={(e) => handleInputChange(e, "number")}
+                        aria-describedby="phoneHelp"
+                        style={{
+                          border: "none",
+                          borderRadius: "5px",
+                          width: "100%",
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="d-flex justify-content-between"
+                  style={{ width: "70%" }}
+                >
+                  <div className="mb-4" style={formStyleSmall}>
+                    <label htmlFor="numberOfAdults" className="form-label">
+                      Number of Adults
+                    </label>
                     <input
-                      type="tel"
+                      type="number"
                       className="form-control"
-                      id="phone"
-                      onChange={(e) => handleInputChange(e, "number")}
-                      aria-describedby="phoneHelp"
+                      name="adults"
+                      onChange={handleInputChange}
+                      min="0"
+                      defaultValue="0"
                       style={{
-                        border: "none",
+                        border: "1px solid #ccc",
                         borderRadius: "5px",
-                        width: "100%",
+                      }}
+                    />
+                  </div>
+                  <div className="mb-4" style={formStyleSmall}>
+                    <label htmlFor="numberOfChildren" className="form-label">
+                      Number of Children
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      name="childs"
+                      onChange={handleInputChange}
+                      min="0"
+                      defaultValue="0"
+                      style={{
+                        border: "1px solid #ccc",
+                        borderRadius: "5px",
                       }}
                     />
                   </div>
                 </div>
-              </div>
-              <div
-                className="d-flex justify-content-between"
-                style={{ width: "70%" }}
-              >
-                <div className="mb-4" style={formStyleSmall}>
-                  <label htmlFor="numberOfAdults" className="form-label">
-                    Number of Adults
+                <div className="mb-4" style={formStyle}>
+                  <label htmlFor="paymentMethod" className="form-label">
+                    Payment Method
                   </label>
                   <input
-                    type="number"
+                    type="text"
                     className="form-control"
-                    name="adults"
+                    name="paymentmethod"
                     onChange={handleInputChange}
-                    min="0"
-                    defaultValue="0"
+                    aria-describedby="paymentHelp"
                     style={{
                       border: "1px solid #ccc",
                       borderRadius: "5px",
                     }}
                   />
                 </div>
-                <div className="mb-4" style={formStyleSmall}>
-                  <label htmlFor="numberOfChildren" className="form-label">
-                    Number of Children
-                  </label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    name="childs"
-                    onChange={handleInputChange}
-                    min="0"
-                    defaultValue="0"
-                    style={{
-                      border: "1px solid #ccc",
-                      borderRadius: "5px",
-                    }}
-                  />
+                <div style={{ width: "70%" }}>
+                  <div className="mt-5 d-flex justify-content-center">
+                    <button
+                      type="submit"
+                      className="bookConBtn"
+                      style={{
+                        backgroundColor: isFormComplete() ? "#f16b51" : "#ccc",
+                        padding: "0.7rem 10em",
+                        color: isFormComplete() ? "#ffffff" : "#666",
+                        borderRadius: "12px",
+                        border: "none",
+                        fontWeight: 600,
+                        cursor: isFormComplete() ? "pointer" : "not-allowed",
+                      }}
+                      disabled={!isFormComplete()}
+                    >
+                      {isData ? "Update" : "Confirm"}
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div className="mb-4" style={formStyle}>
-                <label htmlFor="paymentMethod" className="form-label">
-                  Payment Method
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="paymentmethod"
-                  onChange={handleInputChange}
-                  aria-describedby="paymentHelp"
-                  style={{
-                    border: "1px solid #ccc",
-                    borderRadius: "5px",
-                  }}
-                />
-              </div>
-              <div className="mt-5 d-flex justify-content-between">
-                <button
-                  type="submit"
-                  className="bookConBtn"
-                  style={{
-                    backgroundColor: isFormComplete() ? "#f16b51" : "#ccc",
-                    padding: "0.7rem 12.8rem",
-                    color: isFormComplete() ? "#ffffff" : "#666",
-                    borderRadius: "12px",
-                    border: "none",
-                    fontWeight: 600,
-                    cursor: isFormComplete() ? "pointer" : "not-allowed",
-                  }}
-                  disabled={!isFormComplete()}
-                >
-                  {isData ? "Update" : "Confirm"}
-                </button>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
-        <div style={{ width: "50%" }}>
-          <img
-            style={{ height: "calc(100vh - 120px)", width: "100%" }}
-            src="/book_now_img.png"
-            alt=""
+        <div className="rightDivBooknow" style={{ width: "50%" }}>
+          <SearchDetailCards
+            tourId={tourId}
+            title={title}
+            description={description}
+            img={img}
+            price={price}
+            stayTime={stayTime}
+            city={city}
+            departureLocation={departureLocation}
+            Booknow="booknow"
           />
         </div>
       </div>
