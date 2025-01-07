@@ -1,9 +1,10 @@
 import { baseUrl } from "./baseurl";
+const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
+const weatherUrl = import.meta.env.VITE_WEATHER_BASE_URL;
+const weatherUrlPast = import.meta.env.VITE_WEATHER_BASE_URL_PAST;
+const weatherUrlFuture = import.meta.env.VITE_WEATHER_BASE_URL_FUTURE;
 import axios from "axios";
 const Token = localStorage.getItem("authToken");
-if (!Token) {
-  console.error("Auth token is missing. Please log in.");
-}
 const isTokenValid = () => {
   const expiry = localStorage.getItem("expiry");
   const currentTime = Math.floor(Date.now() / 1000); // Get current time in seconds
@@ -106,6 +107,74 @@ export const getBookedToursApi = async () => {
       headers: {
         "Content-Type": "application/json",
         "auth-token": Token,
+      },
+    });
+
+    // Check if the response status indicates success (2xx range)
+    if (response.status >= 200 && response.status < 300) {
+      return { status: true, data: response.data };
+    } else {
+      return { status: false, error: response.data };
+    }
+  } catch (error) {
+    console.error("Error creating user:", error.message);
+    return { status: false, error: error.message };
+  }
+};
+
+
+// < --------------------------------------------- API FOR GET WEATHER CURRENT --------------------------------------------- >
+
+export const getWeatherCurrentApi = async (city) => {
+  try {
+    const response = await axios.get(`${weatherUrl}?q=${city}&lang=en&key=${apiKey}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Check if the response status indicates success (2xx range)
+    if (response.status >= 200 && response.status < 300) {
+      return { status: true, data: response.data };
+    } else {
+      return { status: false, error: response.data };
+    }
+  } catch (error) {
+    console.error("Error creating user:", error.message);
+    return { status: false, error: error.message };
+  }
+};
+
+
+// < --------------------------------------------- API FOR GET WEATHER PAST --------------------------------------------- >
+
+export const getWeatherPastApi = async (city, date, endDate) => {
+  try {
+    const response = await axios.get(`${weatherUrlPast}?q=${city}&dt=${date}&end_dt=${endDate}&hour=12&lang=en&key=${apiKey}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Check if the response status indicates success (2xx range)
+    if (response.status >= 200 && response.status < 300) {
+      return { status: true, data: response.data };
+    } else {
+      return { status: false, error: response.data };
+    }
+  } catch (error) {
+    console.error("Error creating user:", error.message);
+    return { status: false, error: error.message };
+  }
+};
+
+// < --------------------------------------------- API FOR GET WEATHER FUTURE --------------------------------------------- >
+
+export const getWeatherFutureApi = async (city, date ) => {
+  try {
+    const response = await axios.get(`${weatherUrlFuture}?q=${city}&dt=${date}&lang=en&key=${apiKey}`, {
+      headers: {
+        "Content-Type": "application/json",
       },
     });
 

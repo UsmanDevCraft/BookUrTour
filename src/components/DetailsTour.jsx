@@ -309,7 +309,7 @@ const DetailsTour = () => {
           </h1>
 
           <div>
-            <WeatherCards />
+            <WeatherCards city={city}/>
           </div>
 
           {myTour ? null : (
