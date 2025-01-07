@@ -60,6 +60,7 @@ const Login = () => {
             //   });
         }
         localStorage.setItem("authToken", response.data.authToken);
+        localStorage.setItem("expiry", response.data.expiry);
       }
     } catch (error) {
       console.log({ error: error.message });

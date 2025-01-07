@@ -4,6 +4,20 @@ const Token = localStorage.getItem("authToken");
 if (!Token) {
   console.error("Auth token is missing. Please log in.");
 }
+const isTokenValid = () => {
+  const expiry = localStorage.getItem("expiry");
+  const currentTime = Math.floor(Date.now() / 1000); // Get current time in seconds
+
+  if (expiry && currentTime < expiry) {
+    return true; // Token is still valid
+  } else {
+    return false; // Token has expired
+  }
+};
+if (!isTokenValid()) {
+  localStorage.removeItem("authToken");
+  localStorage.removeItem("expiry");
+}
 
 // < --------------------------------------------- API FOR POST NEW USER --------------------------------------------- >
 
