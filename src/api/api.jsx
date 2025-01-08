@@ -122,14 +122,14 @@ export const getBookedToursApi = async () => {
   }
 };
 
+// < --------------------------------------------- API FOR GET TOUR BY ID --------------------------------------------- >
 
-// < --------------------------------------------- API FOR GET WEATHER CURRENT --------------------------------------------- >
-
-export const getWeatherCurrentApi = async (city) => {
+export const getTourByIdApi = async (tourId) => {
   try {
-    const response = await axios.get(`${weatherUrl}?q=${city}&lang=en&key=${apiKey}`, {
+    const response = await axios.get(`${baseUrl}/api/tour/gettourbyid`, {
       headers: {
         "Content-Type": "application/json",
+        "auth-token": Token,
       },
     });
 
@@ -145,16 +145,43 @@ export const getWeatherCurrentApi = async (city) => {
   }
 };
 
+// < --------------------------------------------- API FOR GET WEATHER CURRENT --------------------------------------------- >
+
+export const getWeatherCurrentApi = async (city) => {
+  try {
+    const response = await axios.get(
+      `${weatherUrl}?q=${city}&lang=en&key=${apiKey}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    // Check if the response status indicates success (2xx range)
+    if (response.status >= 200 && response.status < 300) {
+      return { status: true, data: response.data };
+    } else {
+      return { status: false, error: response.data };
+    }
+  } catch (error) {
+    console.error("Error creating user:", error.message);
+    return { status: false, error: error.message };
+  }
+};
 
 // < --------------------------------------------- API FOR GET WEATHER PAST --------------------------------------------- >
 
 export const getWeatherPastApi = async (city, date, endDate) => {
   try {
-    const response = await axios.get(`${weatherUrlPast}?q=${city}&dt=${date}&end_dt=${endDate}&hour=12&lang=en&key=${apiKey}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axios.get(
+      `${weatherUrlPast}?q=${city}&dt=${date}&end_dt=${endDate}&hour=12&lang=en&key=${apiKey}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     // Check if the response status indicates success (2xx range)
     if (response.status >= 200 && response.status < 300) {
@@ -170,13 +197,16 @@ export const getWeatherPastApi = async (city, date, endDate) => {
 
 // < --------------------------------------------- API FOR GET WEATHER FUTURE --------------------------------------------- >
 
-export const getWeatherFutureApi = async (city, date ) => {
+export const getWeatherFutureApi = async (city, date) => {
   try {
-    const response = await axios.get(`${weatherUrlFuture}?q=${city}&dt=${date}&lang=en&key=${apiKey}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axios.get(
+      `${weatherUrlFuture}?q=${city}&dt=${date}&lang=en&key=${apiKey}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     // Check if the response status indicates success (2xx range)
     if (response.status >= 200 && response.status < 300) {
