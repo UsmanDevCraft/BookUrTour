@@ -96,18 +96,11 @@ const SearchDetailCards = ({
   };
 
   const mytourUpdateScreen = () => {
-    console.log(" Here mybooking Id in SearchDetails card ", bookingId);
+    console.log(" Here mybooking Id in SearchDetails card ", tourId);
     navigate("/booknow", {
       state: {
         Data: "myTourUpdate",
         tourId: tourId,
-        bookingId: bookingId,
-        name: name,
-        email: email,
-        phone_number: phone_number,
-        adults: adults,
-        children: children,
-        payment_method: payment_method,
       },
     });
   };

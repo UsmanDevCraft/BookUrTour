@@ -48,9 +48,7 @@ const MyTours = () => {
   return (
     <div className="box">
       <div className="mt-5 d-flex justify-content-between align-items-center">
-        <h1 style={{ color: "#202445" }}>
-          My Tours
-        </h1>
+        <h1 style={{ color: "#202445" }}>My Tours</h1>
 
         <div
           className="d-flex align-items-center gap-1"
@@ -60,7 +58,7 @@ const MyTours = () => {
             border: "solid #E1E1E1 1px",
             borderRadius: "12px",
             padding: "10px 20px",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
           onClick={signoutClick}
         >
@@ -76,7 +74,10 @@ const MyTours = () => {
         <div className="d-flex justify-content-center gap-5 pb-5 mt-4">
           <div className="wrapCards myToursCards justify-content-center">
             {arrayData.map(
-              ({ title, description, img, price, stayTime, city }, index) => (
+              (
+                { title, description, img, price, stayTime, city, tourId },
+                index
+              ) => (
                 <SearchDetailCards
                   key={index}
                   title={title}
@@ -86,6 +87,7 @@ const MyTours = () => {
                   stayTime={stayTime}
                   city={city}
                   myTours={"myTours"}
+                  tourId={tourId}
                   setIsModalOpen={setIsModalOpen}
                   isModalOpen={isModalOpen}
                 />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { bookTourApi } from "../api/api";
+import { bookTourApi, getTourByIdApi } from "../api/api";
 import Alert from "./Alert";
 import SearchDetailCards from "./SearchDetailCards";
 
@@ -117,6 +117,24 @@ const BookNow = () => {
       console.log({ error: error.message });
     }
   };
+
+  const [getDatabyId, setGetDatabyId] = useState("");
+  const getTourById = async () => {
+    try {
+      const response = await getTourByIdApi(tourId);
+      console.log(response);
+      setGetDatabyId(response.data.tours[0]);
+    } catch (error) {
+      console.log({ error: error.message });
+    }
+  };
+
+  useEffect(() => {
+    if (tourId) {
+      getTourById();
+    }
+    console.log(tourId);
+  }, [tourId]);
 
   const navigate = useNavigate();
 
@@ -383,6 +401,7 @@ const BookNow = () => {
                     type="text"
                     className="form-control"
                     name="name"
+                    value={getDatabyId?.name || ""}
                     onChange={handleInputChange}
                     style={{
                       border: "1px solid #ccc",
@@ -398,6 +417,7 @@ const BookNow = () => {
                     type="email"
                     className="form-control"
                     name="email"
+                    value={getDatabyId?.email || ""}
                     onChange={handleInputChange}
                     aria-describedby="emailHelp"
                     style={{
@@ -462,6 +482,7 @@ const BookNow = () => {
                         type="tel"
                         className="form-control"
                         id="phone"
+                        value={getDatabyId?.phone || ""}
                         onChange={(e) => handleInputChange(e, "number")}
                         aria-describedby="phoneHelp"
                         style={{
@@ -485,6 +506,7 @@ const BookNow = () => {
                       type="number"
                       className="form-control"
                       name="adults"
+                      value={getDatabyId?.adults || ""}
                       onChange={handleInputChange}
                       min="0"
                       defaultValue="0"
@@ -502,6 +524,7 @@ const BookNow = () => {
                       type="number"
                       className="form-control"
                       name="childs"
+                      value={getDatabyId?.childs || ""}
                       onChange={handleInputChange}
                       min="0"
                       defaultValue="0"
@@ -555,12 +578,12 @@ const BookNow = () => {
         <div className="rightDivBooknow" style={{ width: "50%" }}>
           <SearchDetailCards
             tourId={tourId}
-            title={title}
-            description={description}
-            img={img}
-            price={price}
-            stayTime={stayTime}
-            city={city}
+            title={getDatabyId?.title || ""}
+            description={getDatabyId?.description || ""}
+            img={getDatabyId?.img || ""}
+            price={getDatabyId?.price || ""}
+            stayTime={getDatabyId?.stayTime || ""}
+            city={getDatabyId?.city || ""}
             departureLocation={departureLocation}
             Booknow="booknow"
           />

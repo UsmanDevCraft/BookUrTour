@@ -126,12 +126,16 @@ export const getBookedToursApi = async () => {
 
 export const getTourByIdApi = async (tourId) => {
   try {
-    const response = await axios.get(`${baseUrl}/api/tour/gettourbyid`, {
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": Token,
-      },
-    });
+    const response = await axios.post(
+      `${baseUrl}/api/tour/gettourbyid`,
+      { tourId: tourId },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": Token,
+        },
+      }
+    );
 
     // Check if the response status indicates success (2xx range)
     if (response.status >= 200 && response.status < 300) {
