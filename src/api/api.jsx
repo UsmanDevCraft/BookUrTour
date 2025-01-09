@@ -149,6 +149,40 @@ export const getTourByIdApi = async (tourId) => {
   }
 };
 
+// < --------------------------------------------- API FOR GET TOUR BY ID AND UPDATE --------------------------------------------- >
+
+export const getTourByIdandUpdateApi = async (tourId, updatedData) => {
+  try {
+    const response = await axios.put(
+      `${baseUrl}/api/tour/gettourbyidandupdate`,
+      {
+        tourId: tourId,
+        name: updatedData.name,
+        email: updatedData.email,
+        phone: updatedData.phone,
+        adults: updatedData.adults,
+        childs: updatedData.childs,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": Token,
+        },
+      }
+    );
+
+    // Check if the response status indicates success (2xx range)
+    if (response.status >= 200 && response.status < 300) {
+      return { status: true, data: response.data };
+    } else {
+      return { status: false, error: response.data };
+    }
+  } catch (error) {
+    console.error("Error creating user:", error.message);
+    return { status: false, error: error.message };
+  }
+};
+
 // < --------------------------------------------- API FOR GET WEATHER CURRENT --------------------------------------------- >
 
 export const getWeatherCurrentApi = async (city) => {
