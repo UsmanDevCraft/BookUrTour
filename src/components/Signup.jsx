@@ -22,7 +22,6 @@ const Signup = () => {
     e.preventDefault();
     try {
       const response = await signUpUserApi(formValue);
-      console.log(response.status);
       if (response.status) {
         navigate("/exploremore", {state: {alert: true}});
         localStorage.setItem("authToken", response.data.authToken);

@@ -92,11 +92,9 @@ const SearchDetailCards = ({
 
   const confirmDelete = () => {
     setIsModalOpen(true);
-    console.log({ title, stayTime });
   };
 
   const mytourUpdateScreen = () => {
-    console.log(" Here mybooking Id in SearchDetails card ", tourId);
     navigate("/booknow", {
       state: {
         Data: "myTourUpdate",

@@ -17,7 +17,6 @@ const MyTours = () => {
     try {
       setLoading(true);
       const response = await getBookedToursApi();
-      console.log(response);
 
       if (response.status) {
         setArrayData(response.data.tours || []);

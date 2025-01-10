@@ -115,7 +115,6 @@ const BookNow = () => {
     e.preventDefault();
     try {
       const response = await bookTourApi(formDataBook);
-      console.log(response);
       if (response.status) {
         navigate("/mytours");
       }
@@ -128,7 +127,6 @@ const BookNow = () => {
   const getTourById = async () => {
     try {
       const response = await getTourByIdApi(tourId);
-      console.log(response);
       setGetDatabyId(response.data.tours[0]);
     } catch (error) {
       console.log({ error: error.message });
@@ -139,7 +137,6 @@ const BookNow = () => {
     if (tourId) {
       getTourById();
     }
-    console.log(tourId);
   }, [tourId]);
 
   useEffect(() => {
@@ -160,7 +157,6 @@ const BookNow = () => {
     e.preventDefault();
     try {
       const response = await getTourByIdandUpdateApi(tourId, updateValue);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
