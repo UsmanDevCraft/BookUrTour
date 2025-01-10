@@ -433,7 +433,7 @@ const BookNow = () => {
                     type="text"
                     className="form-control"
                     name="name"
-                    value={getDatabyId ? updateValue.name : ""}
+                    value={getDatabyId ? updateValue.name : formDataBook.name}
                     onChange={
                       getDatabyId ? handleUpdateValues : handleInputChange
                     }
@@ -451,7 +451,7 @@ const BookNow = () => {
                     type="email"
                     className="form-control"
                     name="email"
-                    value={getDatabyId ? updateValue.email : ""}
+                    value={getDatabyId ? updateValue.email : formDataBook.email}
                     onChange={
                       getDatabyId ? handleUpdateValues : handleInputChange
                     }
@@ -519,7 +519,9 @@ const BookNow = () => {
                         type="tel"
                         className="form-control"
                         id="phone"
-                        value={getDatabyId ? updateValue.phone : ""}
+                        value={
+                          getDatabyId ? updateValue.phone : formDataBook.phone
+                        }
                         disabled={getDatabyId ? true : false}
                         onChange={(e) => handleInputChange(e, "number")}
                         aria-describedby="phoneHelp"
@@ -544,7 +546,9 @@ const BookNow = () => {
                       type="number"
                       className="form-control"
                       name="adults"
-                      value={getDatabyId ? updateValue.adults : ""}
+                      value={
+                        getDatabyId ? updateValue.adults : formDataBook.adults
+                      }
                       onChange={
                         getDatabyId ? handleUpdateValues : handleInputChange
                       }
@@ -564,7 +568,9 @@ const BookNow = () => {
                       type="number"
                       className="form-control"
                       name="childs"
-                      value={getDatabyId ? updateValue.childs : ""}
+                      value={
+                        getDatabyId ? updateValue.childs : formDataBook.childs
+                      }
                       onChange={
                         getDatabyId ? handleUpdateValues : handleInputChange
                       }
@@ -585,7 +591,7 @@ const BookNow = () => {
                     type="text"
                     className="form-control"
                     name="paymentmethod"
-                    value={getDatabyId ? updateValue.payment : ""}
+                    value={getDatabyId ? updateValue.payment : formDataBook.payment}
                     onChange={
                       getDatabyId ? handleUpdateValues : handleInputChange
                     }
@@ -623,12 +629,12 @@ const BookNow = () => {
         <div className="rightDivBooknow" style={{ width: "50%" }}>
           <SearchDetailCards
             tourId={tourId}
-            title={getDatabyId?.title || ""}
-            description={getDatabyId?.description || ""}
-            img={getDatabyId?.img || ""}
-            price={getDatabyId?.price || ""}
-            stayTime={getDatabyId?.stayTime || ""}
-            city={getDatabyId?.city || ""}
+            title={getDatabyId?.title || title}
+            description={getDatabyId?.description || description}
+            img={getDatabyId?.img || img}
+            price={getDatabyId?.price || price}
+            stayTime={getDatabyId?.stayTime || stayTime}
+            city={getDatabyId?.city || city}
             departureLocation={departureLocation}
             Booknow="booknow"
           />
