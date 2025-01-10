@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { bookTourApi, getTourByIdApi } from "../api/api";
+import { data, useLocation, useNavigate } from "react-router-dom";
+import {
+  bookTourApi,
+  getTourByIdApi,
+  getTourByIdandUpdateApi,
+} from "../api/api";
 import Alert from "./Alert";
 import SearchDetailCards from "./SearchDetailCards";
 
@@ -35,7 +39,13 @@ const BookNow = () => {
   };
 
   const isFormComplete = () => {
-    const { name, email, phone, adults, childs } = formDataBook;
+    // const { name, email, phone, adults, childs } = Data
+    //   ? updateValue
+    //   : formDataBook;
+
+    const { name, email, phone, adults, childs } = getDatabyId
+      ? getDatabyId
+      : formDataBook;
 
     return (
       name.trim() && email.trim() && phone.trim() && adults > 0 && childs >= 0
@@ -101,10 +111,6 @@ const BookNow = () => {
     }
   }, [img]);
 
-  useEffect(() => {
-    console.log("Form data updated:", formDataBook);
-  }, [formDataBook]);
-
   const handleSubmitBooking = async (e) => {
     e.preventDefault();
     try {
@@ -135,6 +141,30 @@ const BookNow = () => {
     }
     console.log(tourId);
   }, [tourId]);
+
+  useEffect(() => {
+    if (getDatabyId) {
+      const { name, email, phone, adults, childs } = getDatabyId;
+      setUpdateValue({ name, email, phone, adults, childs });
+    }
+  }, [getDatabyId]);
+  const [updateValue, setUpdateValue] = useState({});
+  const handleUpdateValues = (e) => {
+    setUpdateValue((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleUpdateTour = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await getTourByIdandUpdateApi(tourId, updateValue);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const navigate = useNavigate();
 
@@ -392,7 +422,9 @@ const BookNow = () => {
             </div>
 
             <div>
-              <form onSubmit={handleSubmitBooking}>
+              <form
+                onSubmit={getDatabyId ? handleUpdateTour : handleSubmitBooking}
+              >
                 <div className="mb-4" style={formStyle}>
                   <label htmlFor="exampleInputPassword1" className="form-label">
                     Name
@@ -401,8 +433,10 @@ const BookNow = () => {
                     type="text"
                     className="form-control"
                     name="name"
-                    value={getDatabyId?.name || ""}
-                    onChange={handleInputChange}
+                    value={getDatabyId ? updateValue.name : ""}
+                    onChange={
+                      getDatabyId ? handleUpdateValues : handleInputChange
+                    }
                     style={{
                       border: "1px solid #ccc",
                       borderRadius: "5px",
@@ -417,8 +451,10 @@ const BookNow = () => {
                     type="email"
                     className="form-control"
                     name="email"
-                    value={getDatabyId?.email || ""}
-                    onChange={handleInputChange}
+                    value={getDatabyId ? updateValue.email : ""}
+                    onChange={
+                      getDatabyId ? handleUpdateValues : handleInputChange
+                    }
                     aria-describedby="emailHelp"
                     style={{
                       border: "1px solid #ccc",
@@ -453,6 +489,7 @@ const BookNow = () => {
                       <select
                         id="countryCode"
                         onChange={(e) => handleInputChange(e, "code")}
+                        disabled={getDatabyId ? true : false}
                         style={{
                           border: "none",
                           padding: "5px",
@@ -462,7 +499,7 @@ const BookNow = () => {
                         }}
                       >
                         {countryCodes.map(({ code, name }) => (
-                          <option key={code} value={code}>
+                          <option key={countryCodes.code} value={code}>
                             {code} ({name})
                           </option>
                         ))}
@@ -482,7 +519,8 @@ const BookNow = () => {
                         type="tel"
                         className="form-control"
                         id="phone"
-                        value={getDatabyId?.phone || ""}
+                        value={getDatabyId ? updateValue.phone : ""}
+                        disabled={getDatabyId ? true : false}
                         onChange={(e) => handleInputChange(e, "number")}
                         aria-describedby="phoneHelp"
                         style={{
@@ -506,8 +544,10 @@ const BookNow = () => {
                       type="number"
                       className="form-control"
                       name="adults"
-                      value={getDatabyId?.adults || ""}
-                      onChange={handleInputChange}
+                      value={getDatabyId ? updateValue.adults : ""}
+                      onChange={
+                        getDatabyId ? handleUpdateValues : handleInputChange
+                      }
                       min="0"
                       defaultValue="0"
                       style={{
@@ -524,8 +564,10 @@ const BookNow = () => {
                       type="number"
                       className="form-control"
                       name="childs"
-                      value={getDatabyId?.childs || ""}
-                      onChange={handleInputChange}
+                      value={getDatabyId ? updateValue.childs : ""}
+                      onChange={
+                        getDatabyId ? handleUpdateValues : handleInputChange
+                      }
                       min="0"
                       defaultValue="0"
                       style={{
@@ -543,7 +585,10 @@ const BookNow = () => {
                     type="text"
                     className="form-control"
                     name="paymentmethod"
-                    onChange={handleInputChange}
+                    value={getDatabyId ? updateValue.payment : ""}
+                    onChange={
+                      getDatabyId ? handleUpdateValues : handleInputChange
+                    }
                     aria-describedby="paymentHelp"
                     style={{
                       border: "1px solid #ccc",
@@ -565,7 +610,7 @@ const BookNow = () => {
                         fontWeight: 600,
                         cursor: isFormComplete() ? "pointer" : "not-allowed",
                       }}
-                      disabled={!isFormComplete()}
+                      disabled={getDatabyId ? false : !isFormComplete()}
                     >
                       {isData ? "Update" : "Confirm"}
                     </button>
