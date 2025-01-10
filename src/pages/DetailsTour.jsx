@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import Navbar from "./Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { LuClock4 } from "react-icons/lu";
 import { CiLocationOn } from "react-icons/ci";
-import WeatherCards from "./WeatherCards";
+import WeatherCards from "../components/WeatherCards";
 import { IoCheckmarkCircle } from "react-icons/io5";
 
 const DetailsTour = () => {

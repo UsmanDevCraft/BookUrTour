@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import Navbar from "./Navbar";
 import { CiLocationOn } from "react-icons/ci";
 import { SlCalender } from "react-icons/sl";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
-import Calendar from "./Calendar";
+import Calendar from "../components/Calendar";
 import dayjs from "dayjs";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiArrowDropUpLine } from "react-icons/ri";

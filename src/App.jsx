@@ -1,18 +1,18 @@
 import React from "react";
 import "./App.css";
-import HomeScreen from "./components/HomeScreen";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   useLocation,
 } from "react-router-dom";
-import ExploreMore from "./components/ExploreMore";
-import SearchTour from "./components/SearchTour";
-import DetailsTour from "./components/DetailsTour";
-import BookNow from "./components/BookNow";
-import Tours from "./components/Tours";
-import MyTours from "./components/MyTours";
+import HomeScreen from "./pages/HomeScreen";
+import ExploreMore from "./pages/ExploreMore";
+import SearchTour from "./pages/SearchTour";
+import DetailsTour from "./pages/DetailsTour";
+import BookNow from "./pages/BookNow";
+import Tours from "./pages/Tours";
+import MyTours from "./pages/MyTours";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import Signup from "./components/Signup";

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import SearchDetailCards from "./SearchDetailCards";
+import SearchDetailCards from "../components/SearchDetailCards";
 import { GiHamburgerMenu } from "react-icons/gi";
 import hotels from "../json/hotels.json";
 

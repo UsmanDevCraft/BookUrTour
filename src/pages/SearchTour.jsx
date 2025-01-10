@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import SearchDetailCards from "./SearchDetailCards";
-import { GiHamburgerMenu } from "react-icons/gi";
+import SearchDetailCards from "../components/SearchDetailCards";
 import hotels from "../json/hotels.json";
 
 const SearchTour = () => {

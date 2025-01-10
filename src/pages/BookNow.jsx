@@ -5,8 +5,8 @@ import {
   getTourByIdApi,
   getTourByIdandUpdateApi,
 } from "../api/api";
-import Alert from "./Alert";
-import SearchDetailCards from "./SearchDetailCards";
+import Alert from "../components/Alert";
+import SearchDetailCards from "../components/SearchDetailCards";
 
 const BookNow = () => {
   const location = useLocation();
