@@ -41,23 +41,23 @@ const Login = () => {
       if (response.status) {
         {
           navigateExploremore
-            ? navigate("/exploremore") : 
-            navigate("/exploremore")
-            // : navigate("/booknow", {
-            //     state: {
-            //       alert: true,
-            //       tourId,
-            //       price,
-            //       description,
-            //       stayTime,
-            //       img,
-            //       title,
-            //       city,
-            //       departureLocation,
-            //       returnDetails,
-            //       myTour,
-            //     },
-            //   });
+            ? navigate("/exploremore")
+            : navigate("/exploremore");
+          // : navigate("/booknow", {
+          //     state: {
+          //       alert: true,
+          //       tourId,
+          //       price,
+          //       description,
+          //       stayTime,
+          //       img,
+          //       title,
+          //       city,
+          //       departureLocation,
+          //       returnDetails,
+          //       myTour,
+          //     },
+          //   });
         }
         localStorage.setItem("authToken", response.data.authToken);
         localStorage.setItem("expiry", response.data.expiry);

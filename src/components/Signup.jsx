@@ -23,7 +23,7 @@ const Signup = () => {
     try {
       const response = await signUpUserApi(formValue);
       if (response.status) {
-        navigate("/exploremore", {state: {alert: true}});
+        navigate("/exploremore", { state: { alert: true } });
         localStorage.setItem("authToken", response.data.authToken);
         localStorage.setItem("expiry", response.data.expiry);
       }
