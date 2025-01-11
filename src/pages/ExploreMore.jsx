@@ -138,7 +138,6 @@ const ExploreMore = () => {
     !selectedDate &&
     !selectedDatePrev;
   const navigateSearchScreen = () => {
-
     navigate("/searchtour", {
       state: {
         destination: selectedCity,

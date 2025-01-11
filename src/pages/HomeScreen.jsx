@@ -81,11 +81,7 @@ const HomeScreen = () => {
               stupendous memory.
             </p>
 
-            <button
-              onClick={explorePage}
-              type="button"
-              style={buttonStyle}
-            >
+            <button onClick={explorePage} type="button" style={buttonStyle}>
               Explore Now
             </button>
           </div>

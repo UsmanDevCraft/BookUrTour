@@ -167,7 +167,7 @@ hr {
 }
 
 @media screen and (max-width: 1375px) {
-  .bookConBtn{
+  .bookConBtn {
     padding: 0.7rem 9rem !important;
   }
 }
@@ -194,7 +194,7 @@ hr {
     min-width: 100px;
   }
 
-  .bookConBtn{
+  .bookConBtn {
     padding: 0.7rem 5rem !important;
   }
 }
@@ -203,7 +203,10 @@ hr {
   .cardStyles {
     width: 45rem !important;
   }
-  .cardStyles h6, p, input {
+
+  .cardStyles h6,
+  p,
+  input {
     font-size: small;
   }
 
@@ -223,27 +226,32 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 auto; /* Center the div horizontally */
+    margin: 0 auto;
+    /* Center the div horizontally */
   }
+
   .rightDivBooknow {
     width: 100% !important;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   .paretBookTour {
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
-    padding: 1em; /* Add some padding for better spacing */
+    padding: 1em;
+    /* Add some padding for better spacing */
   }
+
   .mainBooknow {
     padding-bottom: 5em !important;
   }
 }
 
 @media screen and (max-width: 1130px) {
-  .myToursCards{
+  .myToursCards {
     display: flex;
     flex-wrap: wrap;
   }

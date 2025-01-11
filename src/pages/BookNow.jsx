@@ -587,7 +587,9 @@ const BookNow = () => {
                     type="text"
                     className="form-control"
                     name="paymentmethod"
-                    value={getDatabyId ? updateValue.payment : formDataBook.payment}
+                    value={
+                      getDatabyId ? updateValue.payment : formDataBook.payment
+                    }
                     onChange={
                       getDatabyId ? handleUpdateValues : handleInputChange
                     }
